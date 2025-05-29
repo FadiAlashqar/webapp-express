@@ -13,6 +13,11 @@ app.use(express.static("public"));
 // middlware parsing
 app.use(express.json());
 
+// importo il router
+const movieRouter = require("./routers/movieRouter");
+
+app.use("/api/movie", movieRouter);
+
 // dichiaro la rotta base 
 app.get("/", (req, res) => {
     res.send("Film's Server");
