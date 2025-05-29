@@ -3,7 +3,12 @@ const connection = require("../data/db");
 
 // INDEX
 const index = ((req, res) => {
-    res.send("Elenco dei miei film");
+    connection.query("SELECT * FROM movies;", (err, movieResults) => {
+        if (err) {
+            return res.status(500).json({ error: "Database query failed" + err })
+        }
+        res.json(movieResults);
+    })
 })
 
 // SHOW
