@@ -13,7 +13,30 @@ const index = ((req, res) => {
 
 // SHOW
 const show = ((req, res) => {
-    res.send("Dettaglio film");
+    const id = req.params.id;
+
+    const bookSql = "SELECT * FROM movies WHERE id = ?"
+
+    const reviewSql = "SELECT * FROM reviews WHERE movie_id = ?"
+
+    connection.query(bookSql, [id], (err, movieResults) => {
+        if (err) {
+            return res.status(500).json({ error: "Database query failed" + err })
+        }
+        const movie = movieResults[0];
+
+        connection.query(reviewSql, [id], (err, reviewResults) => {
+            if (err) {
+                return res.status(500).json({ error: "Database query failed" + err })
+            }
+            movie.reviews = reviewResults;
+
+            res.json(movie);
+        })
+    })
+
+
+
 })
 
 module.exports = {
