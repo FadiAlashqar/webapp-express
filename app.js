@@ -4,6 +4,8 @@ const express = require("express");
 // inizializzo express in una variabile
 const app = express();
 
+const cors = require("cors");
+
 // dichiaro la porta nella variabile
 const port = process.env.SERVER_PORT || 3000;
 
@@ -12,6 +14,8 @@ app.use(express.static("public"));
 
 // middlware parsing
 app.use(express.json());
+
+app.use(cors({ origin: process.env.FA_APP }));
 
 // importo il router
 const movieRouter = require("./routers/movieRouter");
